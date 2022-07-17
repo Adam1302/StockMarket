@@ -37,6 +37,7 @@ void CompulsiveTrader::notify() {
     }
     cout << name << "'s Balance: $" << balance << endl << endl;
     cout << name << "'s Share Count: " << shares << endl  << endl;
+    cout << name << "'s Assets: $" << (balance + (shares*newPrice)) << endl << endl;
 }
 
 void PragmaticTrader::notify() {
@@ -57,5 +58,6 @@ void PragmaticTrader::notify() {
         cout << name << ": Waiting" << endl;
     }
     cout << name << "'s Balance: $" << balance << endl;
-    cout << name << "'s Share Count: " << shares << endl  << endl;
+    cout << name << "'s Share Count: " << shares << endl;
+    cout << name << "'s Assets: $" << (balance + (shares*newPrice)) << endl << endl;
 }
