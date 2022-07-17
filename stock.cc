@@ -7,12 +7,16 @@ Stock::Stock(float startingPrice, std::string name, std::string abrv) :
         prices.emplace_back(startingPrice);
     }
 
-float Stock::getState() {
-    return changes[changes.size() - 1];
+std::vector<float>& Stock::getState() {
+    //return changes[changes.size() - 1];
+    return changes;
 }
 
 void Stock::setState(float state) {
+    pps += state;
     changes.emplace_back(state);
-    prices.emplace_back(pps + state);
+    prices.emplace_back(pps);
     notifyObservers();
 }
+
+float Stock::getPrice() { return pps; }
