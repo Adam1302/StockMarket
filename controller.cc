@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 
 #include "controller.h"
 #include "observer.h"
@@ -12,7 +13,7 @@ using namespace std;
 Controller::Controller(istream& in, ostream& out) : in{in}, out{out} {}
 
 float Controller::getChanges() {
-    return (((float) rand() / RAND_MAX) - 0.5);
+    return (((float) rand() / RAND_MAX) - 0.5) * 20;
 }
 
 void Controller::run() {
@@ -23,6 +24,8 @@ void Controller::run() {
 
     Observer* ob1 = new CompulsiveTrader{s1, "Adam", 1000.00, 10};
     Observer* ob2 = new PragmaticTrader{s1, "Charles", 1000.00, 10};
+    Observer* ob3 = new PatientTrader{s1, "Ricky", 1000.00, 10};
+    Observer* ob4 = new SumTrader{s1, "Stewie", 1000.00, 10};
 
     for (int i = 1; i <= 100; ++i) {
         out << "Day " << i << endl;

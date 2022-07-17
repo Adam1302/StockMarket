@@ -14,6 +14,7 @@ std::vector<float>& Stock::getState() {
 
 void Stock::setState(float state) {
     pps += state;
+    if (pps < 0) pps = 0;
     changes.emplace_back(state);
     prices.emplace_back(pps);
     notifyObservers();
