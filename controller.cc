@@ -1,5 +1,4 @@
 #include <iostream>
-#include <random>
 
 #include "controller.h"
 #include "observer.h"
@@ -13,12 +12,15 @@ using namespace std;
 Controller::Controller(istream& in, ostream& out) : in{in}, out{out} {}
 
 float Controller::getChanges() {
-    return (((float) rand() / RAND_MAX) - 0.5) * 20;
+    std::normal_distribution<float> distribution{0.0, 4.0};
+
+    float num = distribution(generator);
+    return num;
 }
 
 void Controller::run() {
     out << "Welcome to the Stock Market" << endl;
-    srand(time( NULL ));
+    //srand(time( NULL ));
 
     Stock* s1 = new Stock{40, "Aerotyne International", "ART"};
 

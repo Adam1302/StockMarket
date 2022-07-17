@@ -2,10 +2,13 @@
 #define __CONTROLLER_H__
 
 #include <iostream>
+#include <random>
 
 class Controller {
     std::istream& in;
     std::ostream& out;
+
+    std::default_random_engine generator;
 
     float getChanges();
 
