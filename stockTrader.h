@@ -46,4 +46,11 @@ class SumTrader : public StockTrader { // Sells when net 3-day change is down, b
     ~SumTrader() {};
 };
 
+class RandomTrader : public StockTrader { // Buys and sells randomly
+  public:
+    RandomTrader(Stock* subject, std::string name, float balance, int shares);
+    void notify();
+    ~RandomTrader() {};
+};
+
 #endif

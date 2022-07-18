@@ -12,7 +12,7 @@ using namespace std;
 Controller::Controller(istream& in, ostream& out) : in{in}, out{out} {}
 
 float Controller::getChanges() {
-    std::normal_distribution<float> distribution{0.0, 4.0};
+    std::normal_distribution<float> distribution{0.0, 5.0};
 
     float num = distribution(generator);
     return num;
@@ -28,6 +28,7 @@ void Controller::run() {
     Observer* ob2 = new PragmaticTrader{s1, "Charles", 1000.00, 10};
     Observer* ob3 = new PatientTrader{s1, "Ricky", 1000.00, 10};
     Observer* ob4 = new SumTrader{s1, "Stewie", 1000.00, 10};
+    Observer* ob5 = new RandomTrader{s1, "Yolanda", 1000.00, 10};
 
     for (int i = 1; i <= 100; ++i) {
         out << "Day " << i << endl;

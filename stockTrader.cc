@@ -7,6 +7,7 @@ using namespace std;
 
 StockTrader::StockTrader(Stock* st, string name, float balance, int shares): subject{st}, name{name}, balance{balance} {
     subject->attach(this);
+    srand(time(0));
 }
 
 CompulsiveTrader::CompulsiveTrader(Stock* subject, std::string name, float balance, int shares) :
@@ -16,6 +17,8 @@ PragmaticTrader::PragmaticTrader(Stock* subject, std::string name, float balance
 PatientTrader::PatientTrader(Stock* subject, std::string name, float balance, int shares) :
     StockTrader{subject, name, balance, shares} {}
 SumTrader::SumTrader(Stock* subject, std::string name, float balance, int shares) :
+    StockTrader{subject, name, balance, shares} {}
+RandomTrader::RandomTrader(Stock* subject, std::string name, float balance, int shares) :
     StockTrader{subject, name, balance, shares} {}
 
 StockTrader::~StockTrader() {
@@ -66,7 +69,7 @@ void PragmaticTrader::notify() {
     cout << name << "'s Assets: $" << (balance + (shares*newPrice)) << endl << endl;
 }
 
-void PatientTrader::notify() { // CHANGE
+void PatientTrader::notify() {
     std::vector<float> changes = subject->getState();
 
     float newPrice = subject->getPrice();
@@ -93,7 +96,7 @@ void PatientTrader::notify() { // CHANGE
     cout << name << "'s Assets: $" << (balance + (shares*newPrice)) << endl << endl;
 }
 
-void SumTrader::notify() { // CHANGE
+void SumTrader::notify() {
     std::vector<float> changes = subject->getState();
 
     float newPrice = subject->getPrice();
@@ -110,6 +113,26 @@ void SumTrader::notify() { // CHANGE
             balance -= newPrice;
             ++shares;
         }
+    } else {
+        cout << name << ": Waiting" << endl;
+    }
+    cout << name << "'s Balance: $" << balance << endl;
+    cout << name << "'s Share Count: " << shares << endl;
+    cout << name << "'s Assets: $" << (balance + (shares*newPrice)) << endl << endl;
+}
+
+void RandomTrader::notify() { // CHANGE
+    float newPrice = subject->getPrice();
+
+    int chance = (rand() % 3) + 1;
+    if (chance == 1 && shares > 0) {
+        cout << name << ": Selling" << endl;
+        balance += newPrice;
+        --shares;
+    } else if (chance == 2 && balance >= newPrice) {
+        cout << name << ": Buying" << endl;
+        balance -= newPrice;
+        ++shares;
     } else {
         cout << name << ": Waiting" << endl;
     }
