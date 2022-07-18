@@ -35,9 +35,11 @@ void Controller::run() {
 
         float changeToday = getChanges();
         float priceToday = s1->getPrice() + changeToday;
+        
         out << "Stock Price: $" << priceToday << "/share (";
         (changeToday >= 0)? out << "+" : out << "-";
         out << "$" << abs(changeToday) << ")" << endl;
+
         s1->setState(changeToday);
     }
 }
