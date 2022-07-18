@@ -15,6 +15,7 @@ class StockTrader : public Observer {
   public:
     StockTrader(Stock* subject, std::string name, float balance, int shares);
     //void notify();
+    int getShares(int max);
     ~StockTrader();
 };
 

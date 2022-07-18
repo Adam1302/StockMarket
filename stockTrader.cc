@@ -25,20 +25,33 @@ StockTrader::~StockTrader() {
     subject->detach(this);
 }
 
+int StockTrader::getShares(int max) {
+    int num1 = (rand() % max) + 1;
+    int num2 = (rand() % max) + 1;
+
+    return min(num1, num2);
+}
+
 void CompulsiveTrader::notify() {
     std::vector<float> changes = subject->getState();
 
     float newPrice = subject->getPrice();
     float change = changes[changes.size() - 1];
 
-    if (change > 0 && balance >= newPrice) {
-        cout << name << ": Buying" << endl;
-        balance -= newPrice;
-        ++shares;
+    int maxSharePurchase = balance / newPrice;
+
+    if (change > 0 && maxSharePurchase > 0) {
+        int sharePurchaseCount = getShares(maxSharePurchase);
+
+        cout << name << ": Buying " << sharePurchaseCount << " share(s)." << endl;
+        balance -= (newPrice * sharePurchaseCount);
+        shares += sharePurchaseCount;
     } else if (change < 0 && shares > 0) {
-        cout << name << ": Selling" << endl;
-        balance += newPrice;
-        --shares;
+        int shareSellingCount = getShares(shares);
+
+        cout << name << ": Selling " << shareSellingCount << " share(s)."  << endl;
+        balance += (newPrice * shareSellingCount);
+        shares -= shareSellingCount;
     } else {
         cout << name << ": Waiting" << endl;
     }
@@ -53,14 +66,20 @@ void PragmaticTrader::notify() {
     float newPrice = subject->getPrice();
     float change = changes[changes.size() - 1];
 
+    int maxSharePurchase = balance / newPrice;
+
     if (change > 0 && shares > 0) {
-        cout << name << ": Selling" << endl;
-        balance += newPrice;
-        --shares;
+        int shareSellingCount = getShares(shares);
+
+        cout << name << ": Selling " << shareSellingCount << " share(s)."  << endl;
+        balance += (newPrice * shareSellingCount);
+        shares -= shareSellingCount;
     } else if (change < 0 && balance >= newPrice) {
-        cout << name << ": Buying" << endl;
-        balance -= newPrice;
-        ++shares;
+        int sharePurchaseCount = getShares(maxSharePurchase);
+
+        cout << name << ": Buying " << sharePurchaseCount << " share(s)." << endl;
+        balance -= (newPrice * sharePurchaseCount);
+        shares += sharePurchaseCount;
     } else {
         cout << name << ": Waiting" << endl;
     }
@@ -75,18 +94,24 @@ void PatientTrader::notify() {
     float newPrice = subject->getPrice();
     // float change = changes[changes.size() - 1];
 
+    int maxSharePurchase = balance / newPrice;
+
     if (changes.size() >= 3 && changes.size() % 3 == 0) {
         float change1 = changes[changes.size() - 1];
         float change2 = changes[changes.size() - 2];
         float change3 = changes[changes.size() - 3];
         if (change1 > 0 && change2 > 0 && change3 > 0 && shares > 0) {
-            cout << name << ": Selling" << endl;
-            balance += newPrice;
-            --shares;
+            int shareSellingCount = getShares(shares);
+
+            cout << name << ": Selling " << shareSellingCount << " share(s)."  << endl;
+            balance += (newPrice * shareSellingCount);
+            shares -= shareSellingCount;
         } else if (change1 < 0 && change2 < 0 && change3 < 0 && balance >= newPrice) {
-            cout << name << ": Buying" << endl;
-            balance -= newPrice;
-            ++shares;
+            int sharePurchaseCount = getShares(maxSharePurchase);
+
+            cout << name << ": Buying " << sharePurchaseCount << " share(s)." << endl;
+            balance -= (newPrice * sharePurchaseCount);
+            shares += sharePurchaseCount;
         }
     } else {
         cout << name << ": Waiting" << endl;
@@ -102,16 +127,22 @@ void SumTrader::notify() {
     float newPrice = subject->getPrice();
     float change = changes[changes.size() - 1];
 
+    int maxSharePurchase = balance / newPrice;
+
     if (changes.size() >= 3 && changes.size() % 3 == 0) {
         float change = changes[changes.size() - 1] + changes[changes.size() - 2] + changes[changes.size() - 3];
         if (change > 0 && shares > 0) {
-            cout << name << ": Selling" << endl;
-            balance += newPrice;
-            --shares;
+            int shareSellingCount = getShares(shares);
+
+            cout << name << ": Selling " << shareSellingCount << " share(s)."  << endl;
+            balance += (newPrice * shareSellingCount);
+            shares -= shareSellingCount;
         } else if (change < 0 && balance >= newPrice) {
-            cout << name << ": Buying" << endl;
-            balance -= newPrice;
-            ++shares;
+            int sharePurchaseCount = getShares(maxSharePurchase);
+
+            cout << name << ": Buying " << sharePurchaseCount << " share(s)." << endl;
+            balance -= (newPrice * sharePurchaseCount);
+            shares += sharePurchaseCount;
         }
     } else {
         cout << name << ": Waiting" << endl;
@@ -124,15 +155,21 @@ void SumTrader::notify() {
 void RandomTrader::notify() { // CHANGE
     float newPrice = subject->getPrice();
 
+    int maxSharePurchase = balance / newPrice;
+
     int chance = (rand() % 3) + 1;
     if (chance == 1 && shares > 0) {
-        cout << name << ": Selling" << endl;
-        balance += newPrice;
-        --shares;
+        int shareSellingCount = getShares(shares);
+
+        cout << name << ": Selling " << shareSellingCount << " share(s)."  << endl;
+        balance += (newPrice * shareSellingCount);
+        shares -= shareSellingCount;
     } else if (chance == 2 && balance >= newPrice) {
-        cout << name << ": Buying" << endl;
-        balance -= newPrice;
-        ++shares;
+        int sharePurchaseCount = getShares(maxSharePurchase);
+
+        cout << name << ": Buying " << sharePurchaseCount << " share(s)." << endl;
+        balance -= (newPrice * sharePurchaseCount);
+        shares += sharePurchaseCount;
     } else {
         cout << name << ": Waiting" << endl;
     }
