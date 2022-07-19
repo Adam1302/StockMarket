@@ -24,7 +24,7 @@ RandomTrader::RandomTrader(unique_ptr<Stock>& subject, std::string name, float b
     StockTrader{subject, name, balance, shares} {}
 
 StockTrader::~StockTrader() {
-    subject->detach(this);
+    // subject->detach(this);
 }
 
 int StockTrader::getShares(int max) {

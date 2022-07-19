@@ -10,9 +10,11 @@ void Subject::attach(Observer* ob) {
     observers.emplace_back(ob);
 }
 
+/*
 void Subject::detach(Observer* ob) {
     observers.erase(std::remove(observers.begin(), observers.end(), ob), observers.end());
 }
+*/
 
 void Subject::notifyObservers() {
     for (auto& ob: observers) {

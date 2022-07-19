@@ -13,8 +13,6 @@ Controller::Controller(istream& in, ostream& out) :
     in{in}, out{out}, distribution{0, 5.0} {}
 
 float Controller::getChanges() {
-    // {0, 5.0}; // We will use a normal distribution
-
     float num = distribution(generator);
     return num;
 }
@@ -23,7 +21,7 @@ void Controller::run() {
     out << "Welcome to the Stock Market. The stock in focus is:" << endl << endl;
 
     unique_ptr<Stock> s1 = make_unique<Stock>(40, "Aerotyne International", "ART");
-    // Stock* s1 = new Stock{40, "Aerotyne International", "ART"};
+    
     out << s1->getNameAbrv() << endl << "A cutting edge high-tech firm out of the Midwest awaiting imminent patent approval on the next generation of radar detectors that have both huge military and civilian applications now." << endl << endl;
 
     unique_ptr<Observer> ob1 = make_unique<CompulsiveTrader>(s1, "Adam", 1000.00, 10);

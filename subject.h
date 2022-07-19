@@ -2,6 +2,7 @@
 #define __SUBJECT_H__
 
 #include <vector>
+#include <memory>
 //#include <observer.h>
 
 class Observer;
@@ -12,7 +13,7 @@ class Subject {
   public:
     Subject();
     void attach(Observer*);
-    void detach(Observer*);
+    // void detach(std::unique_ptr<Observer>&);
     void notifyObservers();
     virtual ~Subject() = 0;
 };
