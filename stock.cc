@@ -2,13 +2,12 @@
 
 using namespace std;
 
-Stock::Stock(float startingPrice, std::string name, std::string abrv) :
-    pps{startingPrice}, name{name}, abrv{abrv}, prices{}, changes{} {
+Stock::Stock(float startingPrice, std::string name, std::string abrv, std::string desc) :
+    pps{startingPrice}, name{name}, abrv{abrv}, desc{desc}, prices{}, changes{} {
         prices.emplace_back(startingPrice);
     }
 
 std::vector<float>& Stock::getState() {
-    //return changes[changes.size() - 1];
     return changes;
 }
 
@@ -21,3 +20,11 @@ void Stock::setState(float state) {
 }
 
 float Stock::getPrice() { return pps; }
+
+string Stock::getNameAbrv() {
+    return name + " (" + abrv + ")";
+}
+
+string Stock::getDescription() {
+    return desc;
+}

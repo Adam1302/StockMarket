@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 
 #include "stockTrader.h"
 #include "stock.h"
@@ -38,6 +39,8 @@ void CompulsiveTrader::notify() {
     float newPrice = subject->getPrice();
     float change = changes[changes.size() - 1];
 
+    if (newPrice == 0) return;
+
     int maxSharePurchase = balance / newPrice;
 
     if (change > 0 && maxSharePurchase > 0) {
@@ -55,9 +58,10 @@ void CompulsiveTrader::notify() {
     } else {
         cout << name << ": Waiting" << endl;
     }
-    cout << name << "'s Balance: $" << balance << endl;
+
+    cout << name << "'s Balance: $" << fixed << setprecision(2) << balance << endl;
     cout << name << "'s Share Count: " << shares << endl;
-    cout << name << "'s Assets: $" << (balance + (shares*newPrice)) << endl << endl;
+    cout << name << "'s Assets: $" << fixed << setprecision(2) << (balance + (shares*newPrice)) << endl << endl;
 }
 
 void PragmaticTrader::notify() {
@@ -65,6 +69,8 @@ void PragmaticTrader::notify() {
 
     float newPrice = subject->getPrice();
     float change = changes[changes.size() - 1];
+
+    if (newPrice == 0) return;
 
     int maxSharePurchase = balance / newPrice;
 
@@ -83,16 +89,18 @@ void PragmaticTrader::notify() {
     } else {
         cout << name << ": Waiting" << endl;
     }
-    cout << name << "'s Balance: $" << balance << endl;
+
+    cout << name << "'s Balance: $" << fixed << setprecision(2) << balance << endl;
     cout << name << "'s Share Count: " << shares << endl;
-    cout << name << "'s Assets: $" << (balance + (shares*newPrice)) << endl << endl;
+    cout << name << "'s Assets: $" << fixed << setprecision(2) << (balance + (shares*newPrice)) << endl << endl;
 }
 
 void PatientTrader::notify() {
     std::vector<float> changes = subject->getState();
 
     float newPrice = subject->getPrice();
-    // float change = changes[changes.size() - 1];
+
+    if (newPrice == 0) return;
 
     int maxSharePurchase = balance / newPrice;
 
@@ -116,9 +124,10 @@ void PatientTrader::notify() {
     } else {
         cout << name << ": Waiting" << endl;
     }
-    cout << name << "'s Balance: $" << balance << endl;
+
+    cout << name << "'s Balance: $" << fixed << setprecision(2) << balance << endl;
     cout << name << "'s Share Count: " << shares << endl;
-    cout << name << "'s Assets: $" << (balance + (shares*newPrice)) << endl << endl;
+    cout << name << "'s Assets: $" << fixed << setprecision(2) << (balance + (shares*newPrice)) << endl << endl;
 }
 
 void SumTrader::notify() {
@@ -126,6 +135,8 @@ void SumTrader::notify() {
 
     float newPrice = subject->getPrice();
     float change = changes[changes.size() - 1];
+
+    if (newPrice == 0) return;
 
     int maxSharePurchase = balance / newPrice;
 
@@ -147,13 +158,16 @@ void SumTrader::notify() {
     } else {
         cout << name << ": Waiting" << endl;
     }
-    cout << name << "'s Balance: $" << balance << endl;
+
+    cout << name << "'s Balance: $" << fixed << setprecision(2) << balance << endl;
     cout << name << "'s Share Count: " << shares << endl;
-    cout << name << "'s Assets: $" << (balance + (shares*newPrice)) << endl << endl;
+    cout << name << "'s Assets: $" << fixed << setprecision(2) << (balance + (shares*newPrice)) << endl << endl;
 }
 
 void RandomTrader::notify() { // CHANGE
     float newPrice = subject->getPrice();
+
+    if (newPrice == 0) return;
 
     int maxSharePurchase = balance / newPrice;
 
@@ -173,7 +187,8 @@ void RandomTrader::notify() { // CHANGE
     } else {
         cout << name << ": Waiting" << endl;
     }
-    cout << name << "'s Balance: $" << balance << endl;
+
+    cout << name << "'s Balance: $" << fixed << setprecision(2) << balance << endl;
     cout << name << "'s Share Count: " << shares << endl;
-    cout << name << "'s Assets: $" << (balance + (shares*newPrice)) << endl << endl;
+    cout << name << "'s Assets: $" << fixed << setprecision(2) << (balance + (shares*newPrice)) << endl << endl;
 }
