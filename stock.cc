@@ -2,8 +2,8 @@
 
 using namespace std;
 
-Stock::Stock(float startingPrice, std::string name, std::string abrv, std::string desc) :
-    pps{startingPrice}, name{name}, abrv{abrv}, desc{desc}, prices{}, changes{} {
+Stock::Stock(float startingPrice, std::string name, std::string abrv) :
+    pps{startingPrice}, name{name}, abrv{abrv}, prices{}, changes{} {
         prices.emplace_back(startingPrice);
     }
 
@@ -23,8 +23,4 @@ float Stock::getPrice() { return pps; }
 
 string Stock::getNameAbrv() {
     return name + " (" + abrv + ")";
-}
-
-string Stock::getDescription() {
-    return desc;
 }

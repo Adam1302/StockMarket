@@ -11,19 +11,18 @@ using namespace std;
 Controller::Controller(istream& in, ostream& out) : in{in}, out{out} {}
 
 float Controller::getChanges() {
-    std::normal_distribution<float> distribution{-4.0, 5.0}; // We will use a normal distribution
-        // The mean is -1 since the c++ normal distribution is negatively skewed
+    std::normal_distribution<float> distribution{-1.0, 5.0}; // We will use a normal distribution
+        // The mean is negative since the c++ normal distribution is negatively skewed
 
     float num = distribution(generator);
     return num;
 }
 
 void Controller::run() {
-    out << "Welcome to the Stock Market" << endl;
+    out << "Welcome to the Stock Market. The stock in focus is:" << endl << endl;
 
-    Stock* s1 = new Stock{40, "Aerotyne International", "ART", "a"};
-
-    // out << s1->getNameAbrv() << endl << "\t" << s1->getDescription() << endl << endl;
+    Stock* s1 = new Stock{40, "Aerotyne International", "ART"};
+    out << s1->getNameAbrv() << endl << "A cutting edge high-tech firm out of the Midwest awaiting imminent patent approval on the next generation of radar detectors that have both huge military and civilian applications now." << endl << endl;
 
     Observer* ob1 = new CompulsiveTrader{s1, "Adam", 1000.00, 10};
     Observer* ob2 = new PragmaticTrader{s1, "Charles", 1000.00, 10};
