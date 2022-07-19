@@ -8,6 +8,7 @@ class Controller {
     std::istream& in;
     std::ostream& out;
 
+    std::normal_distribution<float> distribution;
     std::default_random_engine generator;
 
     float getChanges();

@@ -6,20 +6,21 @@
 
 using namespace std;
 
-StockTrader::StockTrader(Stock* st, string name, float balance, int shares): subject{st}, name{name}, balance{balance} {
+StockTrader::StockTrader(unique_ptr<Stock>& st, string name, float balance, int shares):
+        subject{st}, name{name}, balance{balance}, shares{shares} {
     subject->attach(this);
     srand(time(0));
 }
 
-CompulsiveTrader::CompulsiveTrader(Stock* subject, std::string name, float balance, int shares) :
+CompulsiveTrader::CompulsiveTrader(unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
     StockTrader{subject, name, balance, shares} {}
-PragmaticTrader::PragmaticTrader(Stock* subject, std::string name, float balance, int shares) :
+PragmaticTrader::PragmaticTrader(unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
     StockTrader{subject, name, balance, shares} {}
-PatientTrader::PatientTrader(Stock* subject, std::string name, float balance, int shares) :
+PatientTrader::PatientTrader(unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
     StockTrader{subject, name, balance, shares} {}
-SumTrader::SumTrader(Stock* subject, std::string name, float balance, int shares) :
+SumTrader::SumTrader(unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
     StockTrader{subject, name, balance, shares} {}
-RandomTrader::RandomTrader(Stock* subject, std::string name, float balance, int shares) :
+RandomTrader::RandomTrader(unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
     StockTrader{subject, name, balance, shares} {}
 
 StockTrader::~StockTrader() {

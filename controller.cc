@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 #include "controller.h"
 #include "observer.h"
@@ -8,11 +9,11 @@
 
 using namespace std;
 
-Controller::Controller(istream& in, ostream& out) : in{in}, out{out} {}
+Controller::Controller(istream& in, ostream& out) :
+    in{in}, out{out}, distribution{0, 5.0} {}
 
 float Controller::getChanges() {
-    std::normal_distribution<float> distribution{-1.0, 5.0}; // We will use a normal distribution
-        // The mean is negative since the c++ normal distribution is negatively skewed
+    // {0, 5.0}; // We will use a normal distribution
 
     float num = distribution(generator);
     return num;
@@ -21,14 +22,15 @@ float Controller::getChanges() {
 void Controller::run() {
     out << "Welcome to the Stock Market. The stock in focus is:" << endl << endl;
 
-    Stock* s1 = new Stock{40, "Aerotyne International", "ART"};
+    unique_ptr<Stock> s1 = make_unique<Stock>(40, "Aerotyne International", "ART");
+    // Stock* s1 = new Stock{40, "Aerotyne International", "ART"};
     out << s1->getNameAbrv() << endl << "A cutting edge high-tech firm out of the Midwest awaiting imminent patent approval on the next generation of radar detectors that have both huge military and civilian applications now." << endl << endl;
 
-    Observer* ob1 = new CompulsiveTrader{s1, "Adam", 1000.00, 10};
-    Observer* ob2 = new PragmaticTrader{s1, "Charles", 1000.00, 10};
-    Observer* ob3 = new PatientTrader{s1, "Ricky", 1000.00, 10};
-    Observer* ob4 = new SumTrader{s1, "Stewie", 1000.00, 10};
-    Observer* ob5 = new RandomTrader{s1, "Yolanda", 1000.00, 10};
+    unique_ptr<Observer> ob1 = make_unique<CompulsiveTrader>(s1, "Adam", 1000.00, 10);
+    unique_ptr<Observer> ob2 = make_unique<PragmaticTrader>(s1, "Charles", 1000.00, 10);
+    unique_ptr<Observer> ob3 = make_unique<PatientTrader>(s1, "Ricky", 1000.00, 10);
+    unique_ptr<Observer> ob4 = make_unique<SumTrader>(s1, "Stewie", 1000.00, 10);
+    unique_ptr<Observer> ob5 = make_unique<RandomTrader>(s1, "Yolanda", 1000.00, 10);
 
     for (int i = 1; i <= 35; ++i) {
         out << "Day " << i << endl;
