@@ -33,11 +33,11 @@ void Controller::run() {
     
     sleep_for(5s);
 
-    unique_ptr<Observer> ob1 = make_unique<CompulsiveTrader>(s1, "Adam", 1000.00, 10);
-    unique_ptr<Observer> ob2 = make_unique<PragmaticTrader>(s1, "Charles", 1000.00, 10);
-    unique_ptr<Observer> ob3 = make_unique<PatientTrader>(s1, "Ricky", 1000.00, 10);
-    unique_ptr<Observer> ob4 = make_unique<SumTrader>(s1, "Stewie", 1000.00, 10);
-    unique_ptr<Observer> ob5 = make_unique<RandomTrader>(s1, "Yolanda", 1000.00, 10);
+    unique_ptr<Observer> ob1 = make_unique<CompulsiveTrader>(out, s1, "Adam", 1000.00, 10);
+    unique_ptr<Observer> ob2 = make_unique<PragmaticTrader>(out, s1, "Charles", 1000.00, 10);
+    unique_ptr<Observer> ob3 = make_unique<PatientTrader>(out, s1, "Ricky", 1000.00, 10);
+    unique_ptr<Observer> ob4 = make_unique<SumTrader>(out, s1, "Stewie", 1000.00, 10);
+    unique_ptr<Observer> ob5 = make_unique<RandomTrader>(out, s1, "Yolanda", 1000.00, 10);
 
     int i = 1;
     char c;

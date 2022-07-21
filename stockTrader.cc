@@ -1,4 +1,4 @@
-#include <iostream>
+//#include <iostream>
 #include <iomanip>
 
 #include "stockTrader.h"
@@ -6,22 +6,22 @@
 
 using namespace std;
 
-StockTrader::StockTrader(unique_ptr<Stock>& st, string name, float balance, int shares):
-        subject{st}, name{name}, balance{balance}, shares{shares} {
+StockTrader::StockTrader(ostream& out, unique_ptr<Stock>& st, string name, float balance, int shares):
+        out{out}, subject{st}, name{name}, balance{balance}, shares{shares} {
     subject->attach(this);
     srand(time(0));
 }
 
-CompulsiveTrader::CompulsiveTrader(unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
-    StockTrader{subject, name, balance, shares} {}
-PragmaticTrader::PragmaticTrader(unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
-    StockTrader{subject, name, balance, shares} {}
-PatientTrader::PatientTrader(unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
-    StockTrader{subject, name, balance, shares} {}
-SumTrader::SumTrader(unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
-    StockTrader{subject, name, balance, shares} {}
-RandomTrader::RandomTrader(unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
-    StockTrader{subject, name, balance, shares} {}
+CompulsiveTrader::CompulsiveTrader(ostream& out, unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
+    StockTrader{out, subject, name, balance, shares} {}
+PragmaticTrader::PragmaticTrader(ostream& out, unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
+    StockTrader{out, subject, name, balance, shares} {}
+PatientTrader::PatientTrader(ostream& out, unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
+    StockTrader{out, subject, name, balance, shares} {}
+SumTrader::SumTrader(ostream& out, unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
+    StockTrader{out, subject, name, balance, shares} {}
+RandomTrader::RandomTrader(ostream& out, unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
+    StockTrader{out, subject, name, balance, shares} {}
 
 StockTrader::~StockTrader() {
     // subject->detach(this);
