@@ -13,7 +13,6 @@ class Subject {
   public:
     Subject();
     void attach(Observer*);
-    // void detach(std::unique_ptr<Observer>&);
     void notifyObservers();
     virtual ~Subject() = 0;
 };

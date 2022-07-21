@@ -15,13 +15,13 @@ class StockTrader : public Observer {
     std::string name;
     float balance;
     int shares;
-    float startingBalance;
+    const float startingBalance;
   public:
     StockTrader(std::ostream& out, std::unique_ptr<Stock>& subject, std::string name, float balance, int shares);
     int getShares(int max);
-    std::string getName();
-    float getBalance();
-    float getStarting();
+    const std::string getName();
+    const float getAssets();
+    const float getStarting();
     ~StockTrader();
 };
 

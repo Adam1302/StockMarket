@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <memory>
 #include <chrono>
 #include <thread>
@@ -33,11 +34,13 @@ void Controller::run() {
     
     sleep_for(5s);
 
-    unique_ptr<Observer> ob1 = make_unique<CompulsiveTrader>(out, s1, "Adam", 1000.00, 10);
-    unique_ptr<Observer> ob2 = make_unique<PragmaticTrader>(out, s1, "Charles", 1000.00, 10);
-    unique_ptr<Observer> ob3 = make_unique<PatientTrader>(out, s1, "Ricky", 1000.00, 10);
-    unique_ptr<Observer> ob4 = make_unique<SumTrader>(out, s1, "Stewie", 1000.00, 10);
-    unique_ptr<Observer> ob5 = make_unique<RandomTrader>(out, s1, "Yolanda", 1000.00, 10);
+    vector< unique_ptr<Observer> > observerList;
+
+    observerList.emplace_back(make_unique<CompulsiveTrader>(out, s1, "Adam", 1000.00, 10));
+    observerList.emplace_back(make_unique<PragmaticTrader>(out, s1, "Charles", 1000.00, 10));
+    observerList.emplace_back(make_unique<PatientTrader>(out, s1, "Ricky", 1000.00, 10));
+    observerList.emplace_back(make_unique<SumTrader>(out, s1, "Stewie", 1000.00, 10));
+    observerList.emplace_back(make_unique<RandomTrader>(out, s1, "Yolanda", 1000.00, 10));
 
     int i = 1;
     char c;
@@ -68,7 +71,7 @@ void Controller::run() {
         (changeToday >= 0)? out << "+" : out << "-";
         out << "$" << abs(changeToday) << ")" << endl << endl;
 
-        sleep_for(3s);
+        sleep_for(2s);
 
         s1->setState(changeToday);
 
@@ -85,4 +88,12 @@ void Controller::run() {
             out << endl;
         }
     }
+
+    out << endl << left << setw(20) << "Final Results:" << setw(25) << "Initial Balance ($)" << setw(25) << "Final Balance ($)" << endl;
+
+    for (auto& o : observerList) {
+        out << setw(20) << o->getName() << setw(25) << o->getStarting() << setw(25) << o->getAssets() << endl;
+    }
+
+
 }

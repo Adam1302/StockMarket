@@ -1,4 +1,3 @@
-//#include <iostream>
 #include <iomanip>
 
 #include "stockTrader.h"
@@ -7,10 +6,14 @@
 using namespace std;
 
 StockTrader::StockTrader(ostream& out, unique_ptr<Stock>& st, string name, float balance, int shares):
-        out{out}, subject{st}, name{name}, balance{balance}, shares{shares} {
+        out{out}, subject{st}, name{name}, balance{balance}, shares{shares}, startingBalance{ balance+ (shares * subject->getPrice()) } {
     subject->attach(this);
     srand(time(0));
 }
+
+const std::string StockTrader::getName() { return name; }
+const float StockTrader::getAssets() { return balance + (shares * (subject->getPrice())); }
+const float StockTrader::getStarting() { return startingBalance; }
 
 CompulsiveTrader::CompulsiveTrader(ostream& out, unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
     StockTrader{out, subject, name, balance, shares} {}
@@ -23,9 +26,7 @@ SumTrader::SumTrader(ostream& out, unique_ptr<Stock>& subject, std::string name,
 RandomTrader::RandomTrader(ostream& out, unique_ptr<Stock>& subject, std::string name, float balance, int shares) :
     StockTrader{out, subject, name, balance, shares} {}
 
-StockTrader::~StockTrader() {
-    // subject->detach(this);
-}
+StockTrader::~StockTrader() {}
 
 int StockTrader::getShares(int max) {
     int num1 = (rand() % max) + 1;
